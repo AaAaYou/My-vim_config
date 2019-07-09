@@ -1,3 +1,11 @@
+
+"    __          _                _ _ _ 
+"   / _|_ __ ___(_) __      _____(_) (_)
+"  | |_| '__/ _ \ | \ \ /\ / / _ \ | | |
+"  |  _| | |  __/ |  \ V  V /  __/ | | |
+"  |_| |_|  \___|_|___\_/\_/ \___|_|_|_|
+"                |_____|                
+
 let mapleader=" "
 syntax on
 set number
@@ -41,13 +49,17 @@ map Q :q<CR>
 map R :source $MYVIMRC<CR>
 
 call plug#begin('~/.vim/plugged')
-
+" status optimal
 Plug 'vim-airline/vim-airline'
+
+" color theme
 Plug 'connorholyday/vim-snazzy'
+
+" Markdown
 
 call plug#end()
 
+
 color snazzy
 let g:SnazzyTransparent = 1
-
 
