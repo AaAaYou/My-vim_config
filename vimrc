@@ -1,4 +1,4 @@
-
+"===========================================
 "    __          _                _ _ _ 
 "   / _|_ __ ___(_) __      _____(_) (_)
 "  | |_| '__/ _ \ | \ \ /\ / / _ \ | | |
@@ -23,6 +23,7 @@ set incsearch
 set ignorecase
 set smartcase
 
+set nocompatible
 filetype on
 filetype indent on
 filetype plugin on
@@ -30,6 +31,8 @@ filetype plugin indent on
 set mouse=a
 set encoding=utf-8
 let &t_ut=''
+"set list
+
 
 :set lines=35 columns=120
 
@@ -40,20 +43,33 @@ noremap - Nzz
 noremap <LEADER><CR> :nohlsearch<CR>
 
 "New direction key
-noremap n h
-noremap u k
-noremap e j
-noremap i l
+"noremap n h
+"noremap u k
+"noremap e j
+"noremap i l
 
-noremap k i
-noremap l u
+"noremap k i
+"noremap l u
 
 map s <nop>
 map S :w<CR>
 map Q :q<CR>
 map R :source $MYVIMRC<CR>
 
+"split screen different directory
+map sl :set splitright<CR>:vsplit<CR>
+map sh :set nosplitright<CR>:vsplit<CR>
+map sk :set nosplitbelow<CR>:split<CR>
+map sj :set splitbelow<CR>:split<CR>
 
+map <LEADER>l <C-W>l
+map <LEADER>k <C-W>k
+map <LEADER>h <C-W>h
+map <LEADER>j <C-W>j
+
+map tj :tabe<CR>
+map th :-tabnext<CR>
+map tl :+tabnext<CR>
 " ==========Plug announce======================
 
 call plug#begin('~/.vim/plugged')
@@ -64,10 +80,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'connorholyday/vim-snazzy'
 
 " Markdown
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
-", 'for' :['markdown', 'vim-plug'] }
-"Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
-"Plug 'vimwiki/vimwiki'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
+Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
+Plug 'vimwiki/vimwiki'
 
 call plug#end()
 
@@ -75,7 +90,7 @@ call plug#end()
 
 " Snazzy
 color snazzy
-let g:SnazzyTransparent = 1
+"let g:SnazzyTransparent = 1
 
 " MarkdownPreview
 let g:mkdp_auto_start = 0
