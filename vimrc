@@ -31,8 +31,14 @@ filetype plugin indent on
 set mouse=a
 set encoding=utf-8
 let &t_ut=''
-"set list
-
+set expandtab
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set list
+set listchars=tab:▸\ ,trail:▫
+set scrolloff=5
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 :set lines=35 columns=120
 
@@ -67,6 +73,11 @@ map <LEADER>k <C-W>k
 map <LEADER>h <C-W>h
 map <LEADER>j <C-W>j
 
+map <up> :res +5<CR>
+map <down> :res -5<CR>
+map <left> :vertical resize-5<CR>
+map <right> :vertical resize+5<CR>
+
 map tj :tabe<CR>
 map th :-tabnext<CR>
 map tl :+tabnext<CR>
@@ -83,6 +94,16 @@ Plug 'connorholyday/vim-snazzy'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 Plug 'vimwiki/vimwiki'
+
+" File navigation
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
+" Auto complete
+Plug 'Valloric/YouCompleteMe'
+
+" Verilog
+Plug 'vhda/verilog_systemverilog.vim'
 
 call plug#end()
 
@@ -116,3 +137,7 @@ let g:mkdp_highlight_css = ''
 let g:mkdp_port = ''
 let g:mkdp_page_title = '「${name}」'
 
+" Verilog config
+set foldmethod=syntax
+":VerilogErrorFormat vcs 2
+nnoremap <leader>u :VerilogGotoInstanceStart<CR>
