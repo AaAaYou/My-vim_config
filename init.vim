@@ -7,7 +7,6 @@
 "                |_____|                
 
 "========set status=========================
-
 let mapleader=" "
 syntax on
 set number
@@ -43,7 +42,6 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 :set lines=35 columns=120
 
 "=========keyboard map=======================
-
 noremap = nzz
 noremap - Nzz
 noremap <LEADER><CR> :nohlsearch<CR>
@@ -82,8 +80,8 @@ map tj :tabe<CR>
 map th :-tabnext<CR>
 map tl :+tabnext<CR>
 " ==========Plug announce======================
+call plug#begin('~/.config/nvim/plugged')
 
-call plug#begin('~/.vim/plugged')
 " status optimal
 Plug 'vim-airline/vim-airline'
 
@@ -91,7 +89,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'connorholyday/vim-snazzy'
 
 " Markdown
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for':['markdown', 'vim-plug'] }
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 Plug 'vimwiki/vimwiki'
 
@@ -99,16 +97,21 @@ Plug 'vimwiki/vimwiki'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
-" Auto complete
-Plug 'Valloric/YouCompleteMe'
+" Bracket auto pairs
+Plug 'jiangmiao/auto-pairs'
+
+" Aligned
+Plug 'junegunn/vim-easy-align'
 
 " Verilog
 Plug 'vhda/verilog_systemverilog.vim'
 
+" Undo Tree
+Plug 'mbbill/undotree/'
+
 call plug#end()
 
 " ============Configure region==================
-
 " Snazzy
 color snazzy
 "let g:SnazzyTransparent = 1
@@ -137,7 +140,15 @@ let g:mkdp_highlight_css = ''
 let g:mkdp_port = ''
 let g:mkdp_page_title = '「${name}」'
 
+" Markdown keyboard map
+nmap <C-s> <Plug>MarkdownPreview
+nmap <M-s> <Plug>MarkdownPreviewStop
+nmap <C-p> <Plug>MarkdownPreviewToggle
+
 " Verilog config
 set foldmethod=syntax
 ":VerilogErrorFormat vcs 2
 nnoremap <leader>u :VerilogGotoInstanceStart<CR>
+
+" Undo tree
+nnoremap <F5> :UndotreeToggle<cr>
