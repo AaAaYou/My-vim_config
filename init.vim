@@ -5,6 +5,18 @@
 "  |  _| | |  __/ |  \ V  V /  __/ | | |
 "  |_| |_|  \___|_|___\_/\_/ \___|_|_|_|
 "                |_____|                
+"
+"=======VIM function comments===============
+" copy from vim to system : Shift+V --> choose copy block --> input":y+"
+" copy from system to vim : Enter insert --> shift+insert
+
+
+" === Auto load for first time uses
+"if empty(glob('~/.config/nvim/autoload/plug.vim'))
+"  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+"    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+":  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+"endif
 
 "========set status=========================
 let mapleader=" "
@@ -37,9 +49,20 @@ set softtabstop=2
 set list
 set listchars=tab:▸\ ,trail:▫
 set scrolloff=5
+
+" Press space twice to jump to the next '<++>' and edit it
+map <LEADER><LEADER> <Esc>/<++><CR>:nohlsearch<CR>c4i
+
+" Spelling Check with <space>sc
+hi clear SpellBad
+hi SpellBad cterm=underline
+map <LEADER>sc :set spell!<CR>
+
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 :set lines=35 columns=120
+
+map <LEADER>rc :e ~/.config/nvim/init.vim<CR>
 
 "=========keyboard map=======================
 noremap = nzz
@@ -79,6 +102,16 @@ map <right> :vertical resize+5<CR>
 map tj :tabe<CR>
 map th :-tabnext<CR>
 map tl :+tabnext<CR>
+
+" ==========Path Echo=========================
+
+"python path
+let g:python_host_prog = '/usr/bin/python2.7'
+let g:python3_host_prog = '/usr/bin/python3.6'
+
+"ruby path
+let g:ruby_host_prog = '/usr/bin/ruby'
+
 " ==========Plug announce======================
 call plug#begin('~/.config/nvim/plugged')
 
@@ -109,6 +142,16 @@ Plug 'vhda/verilog_systemverilog.vim'
 " Undo Tree
 Plug 'mbbill/undotree/'
 
+" Auto complete
+Plug 'roxma/nvim-yarp'
+Plug 'ncm2/ncm2'
+Plug 'ncm2/ncm2-jedi'
+Plug 'ncm2/ncm2-github'
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-path'
+Plug 'ncm2/ncm2-match-highlight'
+Plug 'ncm2/ncm2-markdown-subscope'
+
 call plug#end()
 
 " ============Configure region==================
@@ -123,7 +166,7 @@ let g:mkdp_refresh_slow = 0
 let g:mkdp_command_for_global = 0
 let g:mkdp_open_to_the_world = 0
 let g:mkdp_open_ip = ''
-let g:mkdp_browser = 'chromium'
+let g:mkdp_browser = ''
 let g:mkdp_echo_preview_url = 0
 let g:mkdp_browserfunc = ''
 let g:mkdp_preview_options = {
@@ -152,3 +195,15 @@ nnoremap <leader>u :VerilogGotoInstanceStart<CR>
 
 " Undo tree
 nnoremap <F5> :UndotreeToggle<cr>
+
+" Auto complete
+" === NCM2
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>": "\<CR>")
+autocmd BufEnter * call ncm2#enable_for_buffer()
+set completeopt=noinsert,menuone,noselect
+let ncm2#popup_delay = 5
+let g:ncm2#matcher = "substrfuzzy"
+let g:ncm2_jedi#python_version = 3
+let g:ncm2#match_highlight = 'sans-serif'
